@@ -9,7 +9,7 @@ import {
   UseGuards 
 } from '@nestjs/common';
 
-import { AuthGuard } from './auth.guards';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { Public } from './constants';
 
