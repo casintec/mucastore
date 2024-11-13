@@ -11,7 +11,7 @@ export class CreateTableCity1731462154538 implements MigrationInterface {
           created_at timestamp without time zone DEFAULT now() NOT NULL,
           updated_at timestamp without time zone DEFAULT now() NOT NULL,
           primary key (id),
-          foreign key (id) references public.state_entity(id)
+          foreign key (state_entity_id) references public.state_entity(id)
         );
         CREATE SEQUENCE public.city_entity_id_seq
           AS integer

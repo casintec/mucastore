@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { StateModule } from './state/state.module';
+import { CityModule } from './city/city.module';
+import { AddressModule } from './address/address.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   controllers: [AppController],
@@ -23,7 +27,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       migrations: [`${__dirname}/migrations/{.ts,*.js}`],
       migrationsRun: true,
     }),
-    UserModule
+    UserModule,
+    StateModule,
+    CityModule,
+    AddressModule
   ],
 })
 export class AppModule {}
