@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { ReturnUserCreateUser } from './dto/return-user-create-user.dto';
+import { ReturnUserCreateUserDTO } from './dto/return-user-create-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -16,9 +16,16 @@ export class UserController {
   }
 
   @Get()
-  async findAll(): Promise<ReturnUserCreateUser[]> {
+  async findAll(): Promise<ReturnUserCreateUserDTO[]> {
     return (await this.userService.findAll()).map(
-      (UserEntity) => new ReturnUserCreateUser(UserEntity)
+      (UserEntity) => new ReturnUserCreateUserDTO(UserEntity)
+    );
+  }
+
+  @Get('/:userId')
+  async findOneUserById(@Param('userId') userId: number): Promise<ReturnUserCreateUserDTO> {
+    return new ReturnUserCreateUserDTO(
+      await this.userService.findOneUserByIdUsingRelations(userId)
     );
   }
 

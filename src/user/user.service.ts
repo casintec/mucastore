@@ -43,6 +43,15 @@ export class UserService {
     return user;
   }
 
+  async findOneUserByIdUsingRelations(userId: number): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      where: {
+        id: userId
+      },
+      relations: ['addresses']
+    })
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

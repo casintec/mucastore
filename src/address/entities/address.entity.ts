@@ -1,7 +1,12 @@
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateColumn } from "typeorm"
+import { CityEntity } from "src/city/entities/city.entity"
+import { UserEntity } from "src/user/entities/user.entity"
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"
 
 @Entity({ name: 'address_entity' })
 export class AddressEntity {
+  map(arg0: (address: any) => import("../dto/return-address.dto").ReturnAddressDto): import("../dto/return-address.dto").ReturnAddressDto[] {
+    throw new Error("Method not implemented.")
+  }
   @PrimaryGeneratedColumn('rowid')
   id: number
 
@@ -9,7 +14,7 @@ export class AddressEntity {
   userId: number
 
   @Column({ name: 'complement', nullable: true})
-  email: string
+  complement: string
 
   @Column({ name: 'number', nullable: false})
   numberAddress: number
@@ -25,4 +30,12 @@ export class AddressEntity {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt:Date
+
+  @ManyToOne(() => UserEntity, (user) => user.addresses)
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  user?: UserEntity
+
+  @ManyToOne(() => CityEntity, (city) => city.addresses)
+  @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
+  city?: CityEntity
 }
