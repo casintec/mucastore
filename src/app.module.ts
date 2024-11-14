@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
-import { CacheModule } from '@nestjs/cache-manager';
+import { CacheModule } from './cache/cache.module';
 
 @Module({
   controllers: [AppController],
@@ -30,7 +30,8 @@ import { CacheModule } from '@nestjs/cache-manager';
     UserModule,
     StateModule,
     CityModule,
-    AddressModule
+    AddressModule,
+    CacheModule
   ],
 })
 export class AppModule {}
