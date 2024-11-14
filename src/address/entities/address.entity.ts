@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateColumn } from "typeorm"
 
-@Entity({ name: 'address' })
+@Entity({ name: 'address_entity' })
 export class AddressEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number
@@ -16,9 +16,6 @@ export class AddressEntity {
 
   @Column({ name: 'cep', nullable: false})
   cep: string
-
-  @Column({ name: 'password', nullable: false})
-  password: string
 
   @Column({ name: 'city_id', nullable: false})
   cityId: number
