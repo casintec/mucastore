@@ -4,15 +4,24 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressEntity } from './entities/address.entity';
 import { Repository } from 'typeorm';
+import { UserService } from 'src/user/user.service';
+import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class AddressService {
   constructor(
     @InjectRepository(AddressEntity)
-    private readonly addressRepository: Repository<AddressEntity>
+    private readonly addressRepository: Repository<AddressEntity>,
+    private readonly userService: UserService,
+    private readonly cityService: CityService,
   ){}
 
-  createAddress(createAddressDto: CreateAddressDto, userId: number): Promise<AddressEntity> {
+  async createAddress(
+    createAddressDto: CreateAddressDto, 
+    userId: number,
+  ): Promise<AddressEntity> {
+    await this.userService.findOneUserById(userId)
+    await this.cityService.findOneCityById(createAddressDto.cityId)
     return this.addressRepository.save({
       ...createAddressDto,
       userId
