@@ -6,6 +6,9 @@ export class StateEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number
 
+  @Column({ name: 'uf', nullable: false })
+  uf: string;
+
   @Column({ name: 'name', nullable: true})
   name: string
 

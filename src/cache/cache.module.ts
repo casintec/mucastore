@@ -5,7 +5,8 @@ import { CacheModule as CacheModuleNest } from '@nestjs/cache-manager';
 @Module({
   imports: [
     CacheModuleNest.register({
-      ttl: 60000000,
+      ttl: 5,
+      refreshThreshold: 1 * 1000
     }),
   ],
   providers: [CacheService],

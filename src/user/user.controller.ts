@@ -25,22 +25,12 @@ export class UserController {
   @Get('/:userId')
   async findOneUserById(@Param('userId') userId: number): Promise<ReturnUserCreateUserDTO> {
     return new ReturnUserCreateUserDTO(
-      await this.userService.findOneUserByIdUsingRelations(userId)
-    );
+      await this.userService.findOneUserByIdUsingRelations(userId),
+    ) 
   }
 
-  @Get(':id')
+  /*@Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOneUserById(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
+  }*/
 }
