@@ -8,6 +8,7 @@ import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
 import { CacheModule } from './cache/cache.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [AppController],
@@ -31,7 +32,8 @@ import { CacheModule } from './cache/cache.module';
     StateModule,
     CityModule,
     AddressModule,
-    CacheModule
+    CacheModule,
+    AuthModule
   ],
 })
 export class AppModule {}
