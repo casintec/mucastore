@@ -16,8 +16,8 @@ export class AuthService {
     private jwtService: JwtService,
   ){}
 
-  async login(loginDTO: LoginDTO): Promise<ReturnLoginDTO
-  > {
+  async login(loginDTO: LoginDTO): Promise<ReturnLoginDTO> {
+    
     const user: UserEntity | undefined = await this.userService
     .findOneUserByEmail(loginDTO.email)
     .catch(() => undefined)

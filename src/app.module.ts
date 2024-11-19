@@ -9,10 +9,19 @@ import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
 import { CacheModule } from './cache/cache.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService, 
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env.development.local'],
@@ -33,7 +42,8 @@ import { AuthModule } from './auth/auth.module';
     CityModule,
     AddressModule,
     CacheModule,
-    AuthModule
+    AuthModule,
+    JwtModule,
   ],
 })
 export class AppModule {}
