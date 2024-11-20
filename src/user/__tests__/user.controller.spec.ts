@@ -37,7 +37,6 @@ describe('UserController', () => {
 
   it('should return user Entity in createUser', async () => {
     const user = await controller.createUser(createUserMock);
-
     expect(user).toEqual(userEntityMock);
   });
 

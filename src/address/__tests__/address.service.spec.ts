@@ -8,7 +8,6 @@ import { Repository } from 'typeorm';
 import { AddressService } from '../address.service';
 import { AddressEntity } from '../entities/address.entity';
 import { addressMock } from '../__mocks__/address.mock';
-import { createAddressMock } from '../__mocks__/create-address.mock';
 
 describe('AddressService', () => {
   let service: AddressService;
