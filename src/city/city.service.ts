@@ -3,7 +3,7 @@ import { CreateCityDto } from './dto/create-city.dto';
 import { UpdateCityDto } from './dto/update-city.dto';
 import { CityEntity } from './entities/city.entity';
 import { Repository } from 'typeorm';
-import { CacheService } from 'src/cache/cache.service';
+import { CacheService } from '../cache/cache.service';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()

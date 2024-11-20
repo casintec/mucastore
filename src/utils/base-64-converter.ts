@@ -1,4 +1,4 @@
-import { LoginPayloadDTO } from 'src/auth/dto/login-payload.dto';
+import { LoginPayloadDTO } from '../auth/dto/login-payload.dto';
 
 export const authorizantionToLoginPayload = (
   authorization: string,

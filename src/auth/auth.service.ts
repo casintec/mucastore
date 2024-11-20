@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { ReturnUserCreateUserDTO } from 'src/user/dto/return-user-create-user.dto';
-import { UserEntity } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
+import { ReturnUserCreateUserDTO } from '../user/dto/return-user-create-user.dto'
+import { UserEntity } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
 import { LoginDTO } from './dto/login.dto';
 import { LoginPayloadDTO } from './dto/login-payload.dto';
 import { ReturnLoginDTO } from './dto/return-login.dto';
@@ -17,7 +17,7 @@ export class AuthService {
   ){}
 
   async login(loginDTO: LoginDTO): Promise<ReturnLoginDTO> {
-    
+
     const user: UserEntity | undefined = await this.userService
     .findOneUserByEmail(loginDTO.email)
     .catch(() => undefined)

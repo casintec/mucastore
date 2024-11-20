@@ -3,9 +3,9 @@ import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { AddressEntity } from './entities/address.entity';
-import { RoleUser } from 'src/user/enum/role.enum';
-import { Roles } from 'src/decorators/roles.decorator';
-import { UserId } from 'src/decorators/user-id.decorator';
+import { RoleUser } from '../user/enum/role.enum';
+import { Roles } from '../decorators/roles.decorator';
+import { UserId } from '../decorators/user-id.decorator';
 
 
 @Controller('address')
