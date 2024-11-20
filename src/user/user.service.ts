@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -15,8 +15,13 @@ export class UserService {
   ){}
 
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const saltOrRounds = 10;
+    const user = await this.findOneUserByEmail(createUserDto.email).catch(() => undefined)
 
+    if(user){
+      throw new BadRequestException('Email already exists in the system')
+    }
+
+    const saltOrRounds = 10;
     const passwordhasher = await hash(createUserDto.password, saltOrRounds);
     
     return this.userRepository.save({
