@@ -4,12 +4,19 @@ import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { ReturnUserCreateUserDTO } from './dto/return-user-create-user.dto';
+import { RoleUser } from './enum/role.enum';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UsePipes(ValidationPipe)
+  //@Roles(UserType.Root)
+  /*@Post('/admin')
+  async createAdmin(@Body() createUserDTO: CreateUserDTO): Promise<UserEntity> {
+    return this.userService.createUser(createUserDTO, RoleUser.Admin);
+  }*/
+
+  @UsePipes(ValidationPipe) 
   @Post()
   async createUser(@Body() createUserDTO: CreateUserDTO) {
     return this.userService.createUser(createUserDTO)
@@ -23,7 +30,9 @@ export class UserController {
   }
 
   @Get('/:userId')
-  async findOneUserById(@Param('userId') userId: number): Promise<ReturnUserCreateUserDTO> {
+  async findOneUserById(
+    @Param('userId') userId: number
+  ): Promise<ReturnUserCreateUserDTO> {
     return new ReturnUserCreateUserDTO(
       await this.userService.findOneUserByIdUsingRelations(userId),
     ) 

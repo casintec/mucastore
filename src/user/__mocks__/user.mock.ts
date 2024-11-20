@@ -1,7 +1,7 @@
 import { UserEntity } from "../entities/user.entity";
 import { RoleUser } from '../enum/role.enum'
 
-export const UserEntityMock: UserEntity = {
+export const userEntityMock: UserEntity = {
   cpf: '987654321',
   email: 'emailmock@email.com',
   id: 456123,
