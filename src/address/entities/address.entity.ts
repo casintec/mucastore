@@ -4,9 +4,6 @@ import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateCol
 
 @Entity({ name: 'address_entity' })
 export class AddressEntity {
-  map(arg0: (address: any) => import("../dto/return-address.dto").ReturnAddressDto): import("../dto/return-address.dto").ReturnAddressDto[] {
-    throw new Error("Method not implemented.")
-  }
   @PrimaryGeneratedColumn('rowid')
   id: number
 
@@ -38,4 +35,5 @@ export class AddressEntity {
   @ManyToOne(() => CityEntity, (city) => city.addresses)
   @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
   city?: CityEntity
+  map: any
 }

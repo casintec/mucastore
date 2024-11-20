@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AddressService } from './address.service';
-import { CreateAddressDto } from './dto/create-address.dto';
-import { UpdateAddressDto } from './dto/update-address.dto';
+import { CreateAddressDTO } from './dto/create-address.dto';
+import { UpdateAddressDTO } from './dto/update-address.dto';
 import { AddressEntity } from './entities/address.entity';
 import { RoleUser } from '../user/enum/role.enum';
 import { Roles } from '../decorators/roles.decorator';
@@ -16,10 +16,10 @@ export class AddressController {
   @Post()
   @UsePipes(ValidationPipe)
   async createAddress(
-    @Body() createAddressDto: CreateAddressDto, 
+    @Body() CreateAddressDTO: CreateAddressDTO, 
     @UserId() userId: number,
   ): Promise<AddressEntity> {
-    return this.addressService.createAddress(createAddressDto, userId);
+    return this.addressService.createAddress(CreateAddressDTO, userId);
   }
 
   @Get()
@@ -33,8 +33,8 @@ export class AddressController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressService.update(+id, updateAddressDto);
+  update(@Param('id') id: string, @Body() UpdateAddressDTO: UpdateAddressDTO) {
+    return this.addressService.update(+id, UpdateAddressDTO);
   }
 
   @Delete(':id')

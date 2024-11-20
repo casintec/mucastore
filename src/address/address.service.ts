@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAddressDto } from './dto/create-address.dto';
-import { UpdateAddressDto } from './dto/update-address.dto';
+import { CreateAddressDTO } from './dto/create-address.dto';
+import { UpdateAddressDTO } from './dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressEntity } from './entities/address.entity';
 import { Repository } from 'typeorm';
@@ -17,13 +17,13 @@ export class AddressService {
   ){}
 
   async createAddress(
-    createAddressDto: CreateAddressDto, 
+    createAddressDTO: CreateAddressDTO, 
     userId: number,
   ): Promise<AddressEntity> {
     await this.userService.findOneUserById(userId)
-    await this.cityService.findOneCityById(createAddressDto.cityId)
+    await this.cityService.findOneCityById(createAddressDTO.cityId)
     return this.addressRepository.save({
-      ...createAddressDto,
+      ...createAddressDTO,
       userId
     });
   }
@@ -36,7 +36,7 @@ export class AddressService {
     return `This action returns a #${id} address`;
   }
 
-  update(id: number, updateAddressDto: UpdateAddressDto) {
+  update(id: number, UpdateAddressDTO: UpdateAddressDTO) {
     return `This action updates a #${id} address`;
   }
 

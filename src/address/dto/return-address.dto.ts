@@ -1,7 +1,7 @@
 import { ReturnCityDTO } from "../../city/dto/return-city.dto"
 import { AddressEntity } from "../entities/address.entity"
 
-export class ReturnAddressDto {
+export class ReturnAddressDTO {
   complement: string
   numberAddress: number
   cep: string
