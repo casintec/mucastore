@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { ReturnUserCreateUserDTO } from './dto/return-user-create-user.dto';
 
@@ -11,8 +11,8 @@ export class UserController {
 
   @UsePipes(ValidationPipe)
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto)
+  async createUser(@Body() createUserDTO: CreateUserDTO) {
+    return this.userService.createUser(createUserDTO)
   }
 
   @Get()
