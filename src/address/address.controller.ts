@@ -6,13 +6,13 @@ import { AddressEntity } from './entities/address.entity';
 import { RoleUser } from '../user/enum/role.enum';
 import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
+import { ReturnAddressDTO } from './dto/return-address.dto';
 
-
+@Roles(RoleUser.User, RoleUser.Admin)
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Roles(RoleUser.User)
   @Post()
   @UsePipes(ValidationPipe)
   async createAddress(
@@ -23,22 +23,9 @@ export class AddressController {
   }
 
   @Get()
-  findAll() {
-    return this.addressService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.addressService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() UpdateAddressDTO: UpdateAddressDTO) {
-    return this.addressService.update(+id, UpdateAddressDTO);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.addressService.remove(+id);
+  async findAddressByUserId( 
+    @UserId() userId: number,
+  ): Promise<ReturnAddressDTO[]> {
+    return (await this.addressService.findAddressByUserId(userId)).map((address) => new ReturnAddressDTO(address));
   }
 }

@@ -55,4 +55,15 @@ describe('AddressService', () => {
     expect(cityService).toBeDefined();
     expect(addressRepository).toBeDefined();
   });
+
+  it('should be return all Addresses to user', async () => {
+    const addresses = await service.findAddressByUserId(userEntityMock.id)
+
+    expect(addresses).toEqual([addressMock])
+  })
+
+  it('should return not found if not Addresses registered', async () => {
+    jest.spyOn(addressRepository, 'find').mockResolvedValue(undefined)
+    expect(service.findAddressByUserId(userEntityMock.id)).rejects.toThrow()
+  })
 });
