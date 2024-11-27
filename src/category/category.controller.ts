@@ -1,19 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ReturnCategoryDTO } from './dto/return-category.dto';
 import { RoleUser } from 'src/user/enum/role.enum';
 import { Roles } from 'src/decorators/roles.decorator';
+import { CategoryEntity } from './entities/category.entity';
 
 @Roles(RoleUser.User, RoleUser.Admin)
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Roles(RoleUser.Admin, RoleUser.User)
+  @UsePipes(ValidationPipe)
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  async createCategory(
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise<CategoryEntity> {
+    return this.categoryService.createCategory(createCategoryDto);
   }
 
   @Get()
@@ -24,7 +29,7 @@ export class CategoryController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
+    return this.categoryService.findCategoryByName(id);
   }
 
   @Patch(':id')
