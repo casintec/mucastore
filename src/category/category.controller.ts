@@ -2,7 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ReturnCategoryDTO } from './dto/return-category.dto';
+import { RoleUser } from 'src/user/enum/role.enum';
+import { Roles } from 'src/decorators/roles.decorator';
 
+@Roles(RoleUser.User, RoleUser.Admin)
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -13,8 +17,9 @@ export class CategoryController {
   }
 
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  async findAllCategories(): Promise<ReturnCategoryDTO[]> {
+    return (await this.categoryService.findAllCategories()).map(
+      (category) => new ReturnCategoryDTO(category));
   }
 
   @Get(':id')
