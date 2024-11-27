@@ -2,7 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { RoleUser } from 'src/user/enum/role.enum';
+import { Roles } from 'src/decorators/roles.decorator';
+import { ReturnProductDto } from './dto/return-product.dto';
 
+@Roles(RoleUser.Admin, RoleUser.User)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
@@ -13,8 +17,8 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findAll(): Promise<ReturnProductDto[]> {
+    return (await this.productService.findAll()).map((product) => new ReturnProductDto(product))
   }
 
   @Get(':id')

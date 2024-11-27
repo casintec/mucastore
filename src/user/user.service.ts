@@ -27,7 +27,7 @@ export class UserService {
     
     return this.userRepository.save({
       ...createUserDTO,
-      RoleUser: RoleUser.User,
+      RoleUser: RoleUser ? RoleUser : RoleUser.User,
       password: passwordhasher
     })
   }

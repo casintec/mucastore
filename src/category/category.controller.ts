@@ -12,7 +12,7 @@ import { CategoryEntity } from './entities/category.entity';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Roles(RoleUser.Admin, RoleUser.User)
+  @Roles(RoleUser.Admin)
   @UsePipes(ValidationPipe)
   @Post()
   async createCategory(
