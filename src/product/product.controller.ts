@@ -5,15 +5,17 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { RoleUser } from 'src/user/enum/role.enum';
 import { Roles } from 'src/decorators/roles.decorator';
 import { ReturnProductDto } from './dto/return-product.dto';
+import { ProductEntity } from './entities/product.entity';
 
 @Roles(RoleUser.Admin, RoleUser.User)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Roles(RoleUser.Admin)
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  async createProduct(@Body() createProductDto: CreateProductDto): Promise<ProductEntity> {
+    return this.productService.createProduct(createProductDto);
   }
 
   @Get()

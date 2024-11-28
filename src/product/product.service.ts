@@ -4,15 +4,21 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectRepository(ProductEntity) private readonly productRepository: Repository<ProductEntity>,
+    @InjectRepository(ProductEntity) 
+    private readonly productRepository: Repository<ProductEntity>,
+    private readonly categoryService: CategoryService
   ){}
 
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  async createProduct(createProductDto: CreateProductDto): Promise<ProductEntity> {
+    await this.categoryService.findCategoryById(createProductDto.categoryId);
+    return this.productRepository.save({
+      ...createProductDto,
+    })
   }
 
   async findAll(): Promise<ProductEntity[]> {
@@ -21,7 +27,7 @@ export class ProductService {
     if(!products || products.length === 0){
       throw new NotFoundException('Not Found products')
     }
-    
+
     return products;
   }
 

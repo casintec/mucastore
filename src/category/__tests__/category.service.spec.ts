@@ -72,9 +72,20 @@ describe('CategoryService', () => {
   });
   
   
-  /*it('should return error if category find by name is empty', async () => {
-    jest.spyOn(categoryRepository, 'findOne' ).mockRejectedValue(undefined);
+  it('should return error if category find by name is empty', async () => {
+    jest.spyOn(categoryRepository, 'findOne' ).mockRejectedValue(new Error());
     expect(service.findCategoryByName(categoryMock.name)).rejects.toThrow();
-  });*/
+  });
+
+  it('should return category in find by id', async () => {
+    const category = await service.findCategoryById(categoryMock.id);
+    expect(category).toEqual(categoryMock);
+  });
+  
+  
+  it('should return error if not found category by id', async () => {
+    jest.spyOn(categoryRepository, 'findOne' ).mockRejectedValue(new Error());
+    expect(service.findCategoryById(categoryMock.id)).rejects.toThrow();
+  }); 
 
 });
