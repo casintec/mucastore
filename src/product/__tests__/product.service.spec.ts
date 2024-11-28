@@ -8,6 +8,7 @@ import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { createProductMock } from '../__mocks__/create-product.mock';
+import { returnDeletedMock } from '../../__mocks__/return-deleted-items.mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -28,7 +29,9 @@ describe('ProductService', () => {
         provide: getRepositoryToken(ProductEntity),
         useValue: {
           find: jest.fn().mockResolvedValue([productMock]),
-          save: jest.fn().mockResolvedValue(productMock)
+          save: jest.fn().mockResolvedValue(productMock),
+          findOne: jest.fn().mockResolvedValue(productMock),
+          delete: jest.fn().mockResolvedValue(returnDeletedMock)
         }
       }],
     }).compile();
@@ -74,6 +77,21 @@ describe('ProductService', () => {
       .spyOn(categoryService, 'findCategoryById')
       .mockRejectedValue(new Error());
 
-    expect(service.createProduct(createProductMock)).rejects.toThrowError();
+    expect(service.createProduct(createProductMock)).rejects.toThrow();
+  });
+
+  it('should return product in find by id', async () => {
+    const product = await service.findProductById(productMock.id);
+    expect(product).toEqual(productMock);
+  });
+
+  it('should return product after insert in DB', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
+    expect(service.findProductById(productMock.id)).rejects.toThrow();
+  });
+
+  it('should return delete true in delete product', async () => {
+    const deleted = await service.deleteProduct(productMock.id);
+    expect(deleted).toEqual(returnDeletedMock); 
   });
 });
