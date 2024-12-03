@@ -7,6 +7,7 @@ import { UserService } from '../user/user.service';
 import { LoginDTO } from './dto/login.dto';
 import { LoginPayloadDTO } from './dto/login-payload.dto';
 import { ReturnLoginDTO } from './dto/return-login.dto';
+import { validatePassword } from '../utils/password';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,10 @@ export class AuthService {
     .findOneUserByEmail(loginDTO.email)
     .catch(() => undefined)
     
-    const isMatch = await compare(loginDTO.password, user?.password || '')
+    const isMatch = await validatePassword(
+      loginDTO.password, 
+      user?.password || ''
+    )
     
     if(!user || !isMatch){
       throw new NotFoundException('Email or Password invalid')
