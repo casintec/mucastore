@@ -2,7 +2,7 @@ import { CityEntity } from "../../city/entities/city.entity"
 import { UserEntity } from "../../user/entities/user.entity"
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"
 
-@Entity({ name: 'address_entity' })
+@Entity({ name: 'address' })
 export class AddressEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number

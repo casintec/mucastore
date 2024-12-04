@@ -25,18 +25,19 @@ export class RolesGuard implements CanActivate {
 
     const { authorization } = context.switchToHttp().getRequest().headers
     const authNoBearer = authorization.replace('Bearer ', '')
-
+    
     const loginPayloadDTO: LoginPayloadDTO | undefined = 
       await this.jwtService
         .verifyAsync(authNoBearer, {
           secret: process.env.JWT_SECRET
         })
-      .catch(() => undefined)
-      
+        .catch(() => undefined)
+        
+      console.log(authNoBearer)
+
       if(!loginPayloadDTO){
         return false
       }
-
     return requiredRoles.some((role) => role === loginPayloadDTO.typeUser);
   }
 }

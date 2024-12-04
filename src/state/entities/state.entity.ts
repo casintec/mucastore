@@ -1,7 +1,7 @@
 import { CityEntity } from "../../city/entities/city.entity"
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateColumn, OneToMany } from "typeorm"
 
-@Entity({ name: 'state_entity' })
+@Entity({ name: 'state' })
 export class StateEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number

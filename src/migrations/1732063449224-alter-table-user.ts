@@ -4,7 +4,7 @@ export class AlterTableUser1732063449224 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       queryRunner.query(`
-        ALTER TABLE Public.user_entity add unique(email);
+        ALTER TABLE Public.user add unique(email);
       `)
     }
 

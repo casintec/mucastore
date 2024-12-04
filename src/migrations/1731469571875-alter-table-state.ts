@@ -4,14 +4,14 @@ export class AlterTableState1731469571875 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       queryRunner.query(`
-        ALTER TABLE state_entity
+        ALTER TABLE state
           ADD uf varchar(2) NOT NULL;
       `)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
       queryRunner.query(`
-        ALTER TABLE state_entity
+        ALTER TABLE state
           DROP uf;
       `)
     }

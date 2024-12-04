@@ -2,12 +2,12 @@ import { AddressEntity } from "../../address/entities/address.entity"
 import { StateEntity } from "../../state/entities/state.entity"
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from "typeorm"
 
-@Entity({ name: 'city_entity' })
+@Entity({ name: 'city' })
 export class CityEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number
 
-  @Column({ name: 'state_entity_id', nullable: false})
+  @Column({ name: 'state_id', nullable: false})
   stateId: number
 
   @Column({ name: 'name', nullable: false})
@@ -23,6 +23,6 @@ export class CityEntity {
   addresses?: AddressEntity[]
 
   @ManyToOne(() => StateEntity, (state) => state.cities)
-  @JoinColumn({ name: 'state_entity_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'state_id', referencedColumnName: 'id' })
   state?: StateEntity
 }
