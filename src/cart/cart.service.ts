@@ -13,7 +13,7 @@ export class CartService {
   ){}
 
   async verifyActiveCart(userId: number): Promise<CartEntity> {
-    const cart = this.cartRepository.findOne({
+    const cart = await this.cartRepository.findOne({
       where: {
         userId,
       }
