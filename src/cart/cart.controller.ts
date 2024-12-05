@@ -1,18 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CartService } from './cart.service';
-import { CreateCartDto } from './dto/create-cart.dto';
+import { InsertCartDto } from './dto/insert-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { RoleUser } from '../user/enum/role.enum';
+import { CartEntity } from './entities/cart.entity';
+import { UserId } from 'src/decorators/user-id.decorator';
 
 @Roles(RoleUser.User, RoleUser.Admin, RoleUser.Root)
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
+  @UsePipes(ValidationPipe)
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  async insertCart(@Body() insertCartDto: InsertCartDto, @UserId() userId: number): Promise<CartEntity> {
+    return this.cartService.insertProductInCart(insertCartDto, userId);
   }
 
   @Get()

@@ -7,8 +7,8 @@ import { CartProductModule } from '../cart-product/cart-product.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CartEntity]), CartProductModule],
-  controllers: [CartController], 
   providers: [CartService],
+  controllers: [CartController],
   exports: [CartService],
 })
 export class CartModule {}
