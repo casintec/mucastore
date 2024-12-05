@@ -1,5 +1,6 @@
+import { CartProductEntity } from "../../cart-product/entities/cart-product-entity"
 import { CategoryEntity } from "../../category/entities/category.entity"
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, JoinColumn,  } from "typeorm"
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, JoinColumn, OneToMany,  } from "typeorm"
 
 @Entity({name: 'product'})
 export class ProductEntity {
@@ -24,8 +25,12 @@ export class ProductEntity {
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt:Date
 
+  @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.product)
+  cartProduct?: CartProductEntity[]
+
   @ManyToOne(() => CategoryEntity, (category: CategoryEntity) => category.products)
 
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
   category?: CategoryEntity
+
 }

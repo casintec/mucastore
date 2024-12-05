@@ -2,10 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
-import { Roles } from 'src/decorators/roles.decorator';
-import { RoleUser } from 'src/user/enum/role.enum';
+import { Roles } from '../decorators/roles.decorator';
+import { RoleUser } from '../user/enum/role.enum';
 
-@Roles(RoleUser.User)
+@Roles(RoleUser.User, RoleUser.Admin, RoleUser.Root)
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}

@@ -3,8 +3,8 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ReturnCategoryDTO } from './dto/return-category.dto';
-import { RoleUser } from 'src/user/enum/role.enum';
-import { Roles } from 'src/decorators/roles.decorator';
+import { RoleUser } from '../user/enum/role.enum';
+import { Roles } from '../decorators/roles.decorator';
 import { CategoryEntity } from './entities/category.entity';
 
 @Roles(RoleUser.User, RoleUser.Admin)

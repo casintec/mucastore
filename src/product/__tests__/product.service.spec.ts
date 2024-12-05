@@ -105,8 +105,9 @@ describe('ProductService', () => {
 
   it('should return error in update product', async () => {
     jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
-    expect(service.updateProduct(productMock.id,createProductMock),
-    ).rejects.toThrow();
+    expect(
+      service.updateProduct(productMock.id, createProductMock),
+    ).rejects.toThrow()
   });
 
 });

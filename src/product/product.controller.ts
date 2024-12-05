@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Param, Delete, Put, UsePipes, ValidationPi
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { RoleUser } from 'src/user/enum/role.enum';
-import { Roles } from 'src/decorators/roles.decorator';
+import { RoleUser } from '../user/enum/role.enum';
+import { Roles } from '../decorators/roles.decorator';
 import { ReturnProductDto } from './dto/return-product.dto';
 import { ProductEntity } from './entities/product.entity';
 
