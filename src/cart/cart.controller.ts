@@ -8,6 +8,7 @@ import { CartEntity } from './entities/cart.entity';
 import { UserId } from 'src/decorators/user-id.decorator';
 import { ReturnCartProductDto } from 'src/cart-product/dto/return-cart-product.dto';
 import { ReturnCartDto } from './dto/return-cart.dto';
+import { DeleteResult } from 'typeorm';
 
 @Roles(RoleUser.User, RoleUser.Admin, RoleUser.Root)
 @Controller('cart')
@@ -26,22 +27,36 @@ export class CartController {
   }
 
   @Get()
-  findAll() {
-    return this.cartService.findAll();
+  async findCartUserId(
+    @UserId() userId: number
+  ): Promise<ReturnCartDto> {
+    return new ReturnCartDto(
+      await this.cartService.findCartUserId(userId, true)
+    );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  @Delete()
+  async clearCart(@UserId() userId: number): Promise<DeleteResult> {
+    return this.cartService.clearCart(userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
+  @Delete('/product/:productId')
+  async deleteProductCart(
+    @Param('productId') productId: number, 
+    @UserId() userId: number
+  ): Promise<DeleteResult> {
+    return this.cartService.deleteProductCart(productId, userId)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @UsePipes(ValidationPipe)
+  @Patch()
+  async updateProductInCart(
+    @Body() updateCartDto: UpdateCartDto, 
+    @UserId() userId: number
+  ): Promise<ReturnCartDto> {
+    return new ReturnCartDto(
+      await this.cartService.updateProductInCart(updateCartDto, userId)
+    )
   }
+
 }

@@ -67,19 +67,19 @@ export class CartProductService {
   }
 
   async updateProductInCart(
-    updateCartDTO: UpdateCartDto,
+    updateCartDto: UpdateCartDto,
     cart: CartEntity,
   ): Promise<CartProductEntity> {
-    await this.productService.findProductById(updateCartDTO.productId);
+    await this.productService.findProductById(updateCartDto.productId);
 
     const cartProduct = await this.verifyProductInCart(
-      updateCartDTO.productId,
+      updateCartDto.productId,
       cart.id,
     );
 
     return this.cartProductRepository.save({
       ...cartProduct,
-      amount: updateCartDTO.amount,
+      amount: updateCartDto.amount,
     });
   }
 

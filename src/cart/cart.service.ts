@@ -3,8 +3,10 @@ import { InsertCartDto } from './dto/insert-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CartEntity } from './entities/cart.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CartProductService } from '../cart-product/cart-product.service';
+
+const LINE_AFFECTED = 1
 
 @Injectable()
 export class CartService {
@@ -13,6 +15,19 @@ export class CartService {
     private readonly cartRepository: Repository<CartEntity>,
     private readonly cartProductService: CartProductService
   ){}
+
+  async clearCart(userId: number): Promise<DeleteResult> {
+    const cart = await this.findCartUserId(userId)
+    await this.cartRepository.save({
+      ...cart,
+      active: false,
+    })
+
+    return {
+      raw: [],
+      affected: LINE_AFFECTED
+    }
+  }
 
   async findCartUserId(userId: number, isRelations?: boolean): Promise<CartEntity> {
     const relations = isRelations ? {
@@ -50,22 +65,23 @@ export class CartService {
 
     await this.cartProductService.insertProductInCart(insertCartDto, cart)
 
-    return this.findCartUserId(userId, true)
+    return cart
   }
 
-  findAll() {
-    return `This action returns all cart`;
+  async updateProductInCart(
+    updateCartDto: UpdateCartDto,
+    userId: number
+  ): Promise<CartEntity> {
+    const cart = await this.findCartUserId(userId).catch(async() => {
+      return this.createCart(userId)
+    })
+    await this.cartProductService.updateProductInCart(updateCartDto, cart)
+
+    return cart;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
-  }
-
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
+  async deleteProductCart(productId: number, userId: number): Promise<DeleteResult> {
+    const cart = await this.findCartUserId(userId)
+    return this.cartProductService.deleteProductCart(productId, cart.id);
   }
 }
