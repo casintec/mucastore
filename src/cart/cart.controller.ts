@@ -5,8 +5,8 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { RoleUser } from '../user/enum/role.enum';
 import { CartEntity } from './entities/cart.entity';
-import { UserId } from 'src/decorators/user-id.decorator';
-import { ReturnCartProductDto } from 'src/cart-product/dto/return-cart-product.dto';
+import { UserId } from '../decorators/user-id.decorator';
+import { ReturnCartProductDto } from '../cart-product/dto/return-cart-product.dto';
 import { ReturnCartDto } from './dto/return-cart.dto';
 import { DeleteResult } from 'typeorm';
 
