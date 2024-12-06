@@ -6,6 +6,8 @@ import { Roles } from '../decorators/roles.decorator';
 import { RoleUser } from '../user/enum/role.enum';
 import { CartEntity } from './entities/cart.entity';
 import { UserId } from 'src/decorators/user-id.decorator';
+import { ReturnCartProductDto } from 'src/cart-product/dto/return-cart-product.dto';
+import { ReturnCartDto } from './dto/return-cart.dto';
 
 @Roles(RoleUser.User, RoleUser.Admin, RoleUser.Root)
 @Controller('cart')
@@ -14,8 +16,13 @@ export class CartController {
 
   @UsePipes(ValidationPipe)
   @Post()
-  async insertCart(@Body() insertCartDto: InsertCartDto, @UserId() userId: number): Promise<CartEntity> {
-    return this.cartService.insertProductInCart(insertCartDto, userId);
+  async insertCart(
+    @Body() insertCartDto: InsertCartDto, 
+    @UserId() userId: number
+  ): Promise<ReturnCartDto> {
+    return new ReturnCartDto(
+      await this.cartService.insertProductInCart(insertCartDto, userId)
+    );
   }
 
   @Get()
