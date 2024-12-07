@@ -23,14 +23,6 @@ export class CityService {
     }))
   }
 
-  create(createCityDto: CreateCityDto) {
-    return 'This action adds a new city';
-  }
-
-  findAll() {
-    return `This action returns all city`;
-  }
-
   async findOneCityById(cityId: number): Promise<CityEntity> {
     const city = await this.cityRepository.findOne({
       where: {
@@ -41,14 +33,7 @@ export class CityService {
     if(!city){
       throw new NotFoundException(`CityId: ${cityId} not found`)
     }
+    
     return city;
-  }
-
-  update(id: number, updateCityDto: UpdateCityDto) {
-    return `This action updates a #${id} city`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} city`;
   }
 }

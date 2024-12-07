@@ -35,13 +35,11 @@ describe('StateService', () => {
 
   it('should return list of states', async () => {
     const state = await service.findAll();
-
     expect(state).toEqual([stateMock]);
   });
 
   it('should return error in exception', async () => {
     jest.spyOn(stateRepository, 'find').mockRejectedValueOnce(new Error());
-
-    expect(service.findAll()).rejects.toThrowError();
+    expect(service.findAll()).rejects.toThrow();
   });
 });

@@ -8,7 +8,7 @@ import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { createProductMock } from '../__mocks__/create-product.mock';
-import { returnDeletedMock } from '../../__mocks__/return-deleted-items.mock';
+import { returnDeleteMock } from '../../__mocks__/return-delete-mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -31,7 +31,7 @@ describe('ProductService', () => {
           find: jest.fn().mockResolvedValue([productMock]),
           save: jest.fn().mockResolvedValue(productMock),
           findOne: jest.fn().mockResolvedValue(productMock),
-          delete: jest.fn().mockResolvedValue(returnDeletedMock)
+          delete: jest.fn().mockResolvedValue(returnDeleteMock)
         }
       }],
     }).compile();
@@ -92,7 +92,7 @@ describe('ProductService', () => {
 
   it('should return delete true in delete product', async () => {
     const deleted = await service.deleteProduct(productMock.id);
-    expect(deleted).toEqual(returnDeletedMock); 
+    expect(deleted).toEqual(returnDeleteMock); 
   });
 
   it('should return product after update', async () => {
