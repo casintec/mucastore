@@ -5,7 +5,7 @@ import { Repository } from "typeorm"
 import { CartProductEntity } from "../entities/cart-product.entity"
 import { getRepositoryToken } from "@nestjs/typeorm"
 import { productMock } from "../../product/__mocks__/product.mock"
-import { returnDeletedMock } from "../../__mocks__/return-deleted-items.mock"
+import { returnDeleteMock } from "../../__mocks__/return-delete-mock"
 import { cartMock } from "../../cart/__mocks__/cart.mock"
 import { insertCartMock } from "../../cart/__mocks__/insert-cart.mock"
 import { cartProductMock } from "../__mocks__/cart-product.mock" 
@@ -33,7 +33,7 @@ describe('CartProductService', () => {
           useValue: {
             findOne: jest.fn().mockResolvedValue(cartProductMock),
             save: jest.fn().mockResolvedValue(cartProductMock),
-            delete: jest.fn().mockResolvedValue(returnDeletedMock),
+            delete: jest.fn().mockResolvedValue(returnDeleteMock),
           }
         }
       ],
@@ -52,7 +52,7 @@ describe('CartProductService', () => {
 
   it('should return Delete Result after delete product', async() => {
     const deleteResult = await service.deleteProductCart(productMock.id, cartMock.id)
-    expect(deleteResult).toEqual(returnDeletedMock)
+    expect(deleteResult).toEqual(returnDeleteMock) 
   })
 
   it('should return error in exception delete', async() => {
