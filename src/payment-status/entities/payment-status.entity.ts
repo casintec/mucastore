@@ -1,6 +1,7 @@
-import { PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from "typeorm";
+import { PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany, Entity } from "typeorm";
 import { PaymentEntity } from "../../payment/entities/payment.entity"
 
+@Entity({ name: 'payment_status' })
 export class PaymentStatusEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
