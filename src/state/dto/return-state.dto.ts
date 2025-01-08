@@ -1,6 +1,6 @@
 import { StateEntity } from "../entities/state.entity";
 
-export class ReturnStateDTO{
+export class ReturnStateDto{
   name: string
 
   constructor(state: StateEntity) {

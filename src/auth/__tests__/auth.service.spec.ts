@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ReturnUserCreateUserDTO } from '../../user/dto/return-user-create-user.dto';
+import { ReturnUserCreateUserDto } from '../../user/dto/return-user-create-user.dto';
 import { UserService } from '../../user/user.service';
 import { userEntityMock } from '../../user/__mocks__/user.mock';
 import { AuthService } from '../auth.service';

@@ -1,7 +1,7 @@
 import { userEntityMock } from '../../user/__mocks__/user.mock';
-import { LoginDTO } from '../dto/login.dto';
+import { LoginDto } from '../dto/login.dto';
 
-export const authLoginUserMock: LoginDTO = {
+export const authLoginUserMock: LoginDto = {
   email: userEntityMock.email,
   password: 'abc',
 };

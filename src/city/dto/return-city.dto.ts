@@ -1,12 +1,12 @@
-import { ReturnStateDTO } from "../../state/dto/return-state.dto"
+import { ReturnStateDto } from "../../state/dto/return-state.dto"
 import { CityEntity } from "../entities/city.entity"
 
-export class ReturnCityDTO {
+export class ReturnCityDto {
   name: string
-  state?: ReturnStateDTO
+  state?: ReturnStateDto
 
   constructor(city: CityEntity) {
     this.name = city.name
-    this.state = city.state ? new ReturnStateDTO(city.state) : undefined
+    this.state = city.state ? new ReturnStateDto(city.state) : undefined
   }
 }

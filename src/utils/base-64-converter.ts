@@ -1,8 +1,8 @@
-import { LoginPayloadDTO } from '../auth/dto/login-payload.dto';
+import { LoginPayloadDto } from '../auth/dto/login-payload.dto';
 
 export const authorizantionToLoginPayload = (
   authorization: string,
-): LoginPayloadDTO | undefined => {
+): LoginPayloadDto | undefined => {
   const authorizationSplited = authorization.split('.');
 
   if (authorizationSplited.length < 3 || !authorizationSplited[1]) {

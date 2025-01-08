@@ -16,6 +16,8 @@ import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
 import { CartModule } from './cart/cart.module';
 import { CartProductModule } from './cart-product/cart-product.module';
+import { PaymentStatusModule } from './payment-status/payment-status.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   controllers: [AppController],
@@ -52,6 +54,8 @@ import { CartProductModule } from './cart-product/cart-product.module';
     CategoryModule,
     CartModule,
     CartProductModule,
+    PaymentStatusModule,
+    PaymentModule,
   ],
 })
 export class AppModule {}

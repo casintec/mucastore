@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { LoginPayloadDTO } from '../auth/dto/login-payload.dto'
+import { LoginPayloadDto } from '../auth/dto/login-payload.dto'
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { RoleUser } from '../user/enum/role.enum';
 
@@ -26,7 +26,7 @@ export class RolesGuard implements CanActivate {
     const { authorization } = context.switchToHttp().getRequest().headers
     const authNoBearer = authorization.replace('Bearer ', '')
     
-    const loginPayloadDTO: LoginPayloadDTO | undefined = 
+    const loginPayloadDTO: LoginPayloadDto | undefined = 
       await this.jwtService
         .verifyAsync(authNoBearer, {
           secret: process.env.JWT_SECRET

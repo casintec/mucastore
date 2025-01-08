@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { UserService } from './user.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { ReturnUserCreateUserDTO } from './dto/return-user-create-user.dto';
+import { ReturnUserCreateUserDto } from './dto/return-user-create-user.dto';
 import { UpdatePasswordDTO } from './dto/update-user-password.dto';
 import { UserId } from '../decorators/user-id.decorator';
 import { Roles } from '../decorators/roles.decorator';
@@ -26,9 +26,9 @@ export class UserController {
 
   @Roles(RoleUser.Admin)
   @Get()
-  async findAll(): Promise<ReturnUserCreateUserDTO[]> {
+  async findAll(): Promise<ReturnUserCreateUserDto[]> {
     return (await this.userService.findAll()).map(
-      (UserEntity) => new ReturnUserCreateUserDTO(UserEntity)
+      (UserEntity) => new ReturnUserCreateUserDto(UserEntity)
     );
   }
 
@@ -36,8 +36,8 @@ export class UserController {
   @Get('/:userId')
   async findOneUserById(
     @Param('userId') userId: number
-  ): Promise<ReturnUserCreateUserDTO> {
-    return new ReturnUserCreateUserDTO(
+  ): Promise<ReturnUserCreateUserDto> {
+    return new ReturnUserCreateUserDto(
       await this.userService.findOneUserByIdUsingRelations(userId),
     ) 
   }
