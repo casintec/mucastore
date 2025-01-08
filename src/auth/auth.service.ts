@@ -6,7 +6,7 @@ import { UserEntity } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { LoginDTO } from './dto/login.dto';
 import { LoginPayloadDTO } from './dto/login-payload.dto';
-import { ReturnLoginDTO } from './dto/return-login.dto';
+import { ReturnLoginDto } from './dto/return-login.dto';
 import { validatePassword } from '../utils/password';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AuthService {
     private jwtService: JwtService,
   ){}
 
-  async login(loginDTO: LoginDTO): Promise<ReturnLoginDTO> {
+  async login(loginDTO: LoginDTO): Promise<ReturnLoginDto> {
 
     const user: UserEntity | undefined = await this.userService
     .findOneUserByEmail(loginDTO.email)

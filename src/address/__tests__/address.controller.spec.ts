@@ -40,4 +40,17 @@ describe('AddressController', () => {
 
     expect(address).toEqual(addressMock);
   });
+
+  it('should address Entity in findAddressByUserId', async () => {
+    const addresses = await controller.findAddressByUserId(userEntityMock.id);
+
+    expect(addresses).toEqual([
+      {
+        id: addressMock.id,
+        complement: addressMock.complement,
+        numberAddress: addressMock.numberAddress,
+        cep: addressMock.cep,
+      },
+    ]);
+  });
 });

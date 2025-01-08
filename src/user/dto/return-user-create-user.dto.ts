@@ -15,7 +15,6 @@ export class ReturnUserCreateUserDTO {
     this.email = userEntity.email
     this.phone = userEntity.phone
     this.cpf = userEntity.cpf
-
     this.addresses = userEntity.addresses 
     ? userEntity.addresses.map((address) => new ReturnAddressDTO(address)) 
     : undefined
