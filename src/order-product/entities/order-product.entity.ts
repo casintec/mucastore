@@ -33,12 +33,11 @@ export class OrderProductEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  /*@ManyToOne(() => OrderEntity, (order) => order.ordersProduct)
+  @ManyToOne(() => OrderEntity, (order) => order.ordersProduct)
   @JoinColumn({ name: 'order_id', referencedColumnName: 'id' })
   order?: OrderEntity;
 
   @ManyToOne(() => ProductEntity, (product) => product.ordersProduct)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: ProductEntity;
-  */
 }

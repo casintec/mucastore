@@ -36,7 +36,6 @@ export class OrderEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
- /*
   @ManyToOne(() => UserEntity, (user) => user.orders)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user?: UserEntity;
@@ -51,6 +50,6 @@ export class OrderEntity {
 
   @OneToMany(() => OrderProductEntity, (orderProduct) => orderProduct.order)
   ordersProduct?: OrderProductEntity[];
-*/
+
   amountProducts?: number;
 }
