@@ -109,5 +109,4 @@ describe('ProductService', () => {
       service.updateProduct(productMock.id, createProductMock),
     ).rejects.toThrow()
   });
-
 });

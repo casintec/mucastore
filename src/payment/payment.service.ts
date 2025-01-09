@@ -1,26 +1,73 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePaymentDto } from './dto/create-payment.dto';
-import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CartProductEntity } from '../cart-product/entities/cart-product.entity';
+import { CartEntity } from '../cart/entities/cart.entity';
+import { CreateOrderDto } from '../order/dto/create-order.dto';
+import { PaymentType } from '../payment-status/enums/payment-type.enum';
+import { ProductEntity } from '../product/entities/product.entity';
+import { Repository } from 'typeorm';
+import { PaymentCreditCardEntity } from './entities/payment-credit-card.entity';
+import { PaymentPixEntity } from './entities/payment-pix.entity';
+import { PaymentEntity } from './entities/payment.entity';
 
 @Injectable()
 export class PaymentService {
-  create(createPaymentDto: CreatePaymentDto) {
-    return 'This action adds a new payment';
+  constructor(
+    @InjectRepository(PaymentEntity)
+    private readonly paymentRepository: Repository<PaymentEntity>,
+  ) {}
+
+  generateFinalPrice(cart: CartEntity, products: ProductEntity[]): number {
+    if (!cart.cartProduct || cart.cartProduct.length === 0) {
+      return 0;
+    }
+
+    return Number(
+      cart.cartProduct
+        .map((cartProduct: CartProductEntity) => {
+          const product = products.find(
+            (product) => product.id === cartProduct.productId,
+          );
+          if (product) {
+            return cartProduct.amount * product.price;
+          }
+
+          return 0;
+        })
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        .toFixed(2),
+    );
   }
 
-  findAll() {
-    return `This action returns all payment`;
-  }
+  async createPayment(
+    createOrderDto: CreateOrderDto,
+    products: ProductEntity[],
+    cart: CartEntity,
+  ): Promise<PaymentEntity> {
+    const finalPrice = this.generateFinalPrice(cart, products);
 
-  findOne(id: number) {
-    return `This action returns a #${id} payment`;
-  }
+    if (createOrderDto.amountPayments) {
+      const paymentCreditCard = new PaymentCreditCardEntity(
+        PaymentType.Done,
+        finalPrice,
+        0,
+        finalPrice,
+        createOrderDto,
+      );
+      return this.paymentRepository.save(paymentCreditCard);
+    } else if (createOrderDto.codePix && createOrderDto.datePayment) {
+      const paymentPix = new PaymentPixEntity(
+        PaymentType.Done,
+        finalPrice,
+        0,
+        finalPrice,
+        createOrderDto,
+      );
+      return this.paymentRepository.save(paymentPix);
+    }
 
-  update(id: number, updatePaymentDto: UpdatePaymentDto) {
-    return `This action updates a #${id} payment`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} payment`;
+    throw new BadRequestException(
+      'Amount Payments or code pix or date payment not found',
+    );
   }
 }

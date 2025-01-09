@@ -17,7 +17,7 @@ export class CartService {
   ){}
 
   async clearCart(userId: number): Promise<DeleteResult> {
-    const cart = await this.findCartUserId(userId)
+    const cart = await this.findCartByUserId(userId)
     await this.cartRepository.save({
       ...cart,
       active: false,
@@ -29,7 +29,7 @@ export class CartService {
     }
   }
 
-  async findCartUserId(userId: number, isRelations?: boolean): Promise<CartEntity> {
+  async findCartByUserId(userId: number, isRelations?: boolean): Promise<CartEntity> {
     const relations = isRelations ? {
       cartProduct: {
         product: true
@@ -59,7 +59,7 @@ export class CartService {
   }
 
   async insertProductInCart(insertCartDto: InsertCartDto, userId: number): Promise<CartEntity> {
-    const cart = await this.findCartUserId(userId).catch( async () => {
+    const cart = await this.findCartByUserId(userId).catch( async () => {
       return this.createCart(userId)
     })
 
@@ -72,7 +72,7 @@ export class CartService {
     updateCartDto: UpdateCartDto,
     userId: number
   ): Promise<CartEntity> {
-    const cart = await this.findCartUserId(userId).catch(async() => {
+    const cart = await this.findCartByUserId(userId).catch(async() => {
       return this.createCart(userId)
     })
     await this.cartProductService.updateProductInCart(updateCartDto, cart)
@@ -81,7 +81,7 @@ export class CartService {
   }
 
   async deleteProductCart(productId: number, userId: number): Promise<DeleteResult> {
-    const cart = await this.findCartUserId(userId)
+    const cart = await this.findCartByUserId(userId)
     return this.cartProductService.deleteProductCart(productId, cart.id);
   }
 }

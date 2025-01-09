@@ -68,14 +68,14 @@ describe('CartService', () => {
 
   it('should return cart in success(not send relations first)', async () => {
     const spy = jest.spyOn(cartRepository, 'findOne')
-    const cart = await service.findCartUserId(userEntityMock.id)
+    const cart = await service.findCartByUserId(userEntityMock.id)
     expect(cart).toEqual(cartMock)
     expect(spy.mock.calls[0][0].relations).toEqual(undefined)
   }) 
 
   it('should return cart in success(with send relations first)', async () => {
     const spy = jest.spyOn(cartRepository, 'findOne')
-    const cart = await service.findCartUserId(userEntityMock.id, true)
+    const cart = await service.findCartByUserId(userEntityMock.id, true)
     expect(cart).toEqual(cartMock)
     expect(spy.mock.calls[0][0].relations).toEqual({
       cartProduct: {
@@ -86,7 +86,7 @@ describe('CartService', () => {
 
   it('should return NotFoundExceptionin in not found cart', async () => {
     jest.spyOn(cartRepository, 'findOne').mockResolvedValue(undefined)
-    expect(service.findCartUserId(userEntityMock.id)).rejects.toThrow(NotFoundException)
+    expect(service.findCartByUserId(userEntityMock.id)).rejects.toThrow(NotFoundException)
   })
   
   it('should return send info in save(createCart)', async () => {

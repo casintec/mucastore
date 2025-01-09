@@ -31,7 +31,7 @@ export class CartController {
     @UserId() userId: number
   ): Promise<ReturnCartDto> {
     return new ReturnCartDto(
-      await this.cartService.findCartUserId(userId, true)
+      await this.cartService.findCartByUserId(userId, true)
     );
   }
 
